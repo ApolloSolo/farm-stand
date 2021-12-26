@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Add Products</title>
+        <title>Edit Products</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
@@ -16,18 +16,18 @@
         <h1>Add A Product</h1>
 
         <div>
-            <form action='/products' method="post">
+            <form action='/products/<%= product._id %>?_method=PUT' method="post">
                 <label for="name">Product Name</label>
-                <input type="text" name="name" id="name" placeholder="product name">
+                <input type="text" name="name" id="name" placeholder="product name" value="<%= product.name %>">
                 <br>
                 <label for="price">Price</label>
-                <input step="0.01" type="number" id="price" name="price">
+                <input step="0.01" type="number" id="price" name="price" value="<%= product.price %>">
                 <br>
                 <label for="category">Category</label>
                 <select id="category" name="category">
                     <%for(let cat of categories) {%>
-                        <option value='<%=cat%>''><%=cat%></option>
-                    <%}%>
+                        <option value='<%=cat%>' <%=product.category === cat ? 'selected' : ''%>><%=cat%></option>
+                    <%}%> <!--loop through our category array and add options, and if product category is = tothe array category, set is as selected-->
                 </select>
                 <button>Submit</button>
             </form>
