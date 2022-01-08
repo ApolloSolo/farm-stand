@@ -13,21 +13,16 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <h1>View <%=category%> Products</h1>
+        <h1>All Farms</h1>
 
         <ul>
-            <% for(let p of products){ %>
-                <li><a href="products/<%= p._id %>/index"><%= p.name %></a> <a href="/products/<%= p._id %>/edit">Edit</a></li>
+            <% for(let f of farms){ %>
+                <li><%= f.name %> <a href="/farms/<%=f._id%>/index">Details</a></li>
             <% } %>
         </ul>
-
-        <a href="/products/new">Add Product</a> <!--Will display link if category is set to All-->
-        <%if(category !== "All"){%>
-            <a href="/products">All Products</a>
-        <%}%>
-        <a href="/farms">Farms</a>
-
         
+        <a href="farms/new">Add Farm</a>
+        <a href="/products">All Products</a>
         <script src="" async defer></script>
     </body>
 </html>

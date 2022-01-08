@@ -7,26 +7,33 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>All Products</title>
+        <title><%= farm.name %></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <h1>View <%=category%> Products</h1>
-
+        <h1><%= farm.name %></h1>
         <ul>
-            <% for(let p of products){ %>
-                <li><a href="products/<%= p._id %>/index"><%= p.name %></a> <a href="/products/<%= p._id %>/edit">Edit</a></li>
-            <% } %>
+            <li>City: <%= farm.city %></li>
+            <li>Email: <%= farm.email %></li>
+            <li><a href="/farms/<%=farm._id%>/products/new">Add Products</a></li>
         </ul>
+        <h2>Products</h2>
+        <ul>
+            <%for(let product of farm.products){%>
+                <li><%= product.name %></li>
+            <%}%>
+        </ul>
+    
+        <a href="/farms">All Farms</a>
+        <a href="/products">All Products</a>
 
-        <a href="/products/new">Add Product</a> <!--Will display link if category is set to All-->
-        <%if(category !== "All"){%>
-            <a href="/products">All Products</a>
-        <%}%>
-        <a href="/farms">Farms</a>
-
+        
+            <form action="/farms/<%=farm._id%>?_method=DELETE" method="POST">
+            <button>DELETE</button>
+        </form>
+        
         
         <script src="" async defer></script>
     </body>

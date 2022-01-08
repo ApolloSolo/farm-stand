@@ -13,10 +13,11 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <h1>Add A Product</h1>
+        <h1><%=farm.name%></h1>
+        <h2>Add a Product</h2>
 
         <div>
-            <form action='/products' method="post">
+            <form action='/farms/<%=farm._id%>/products' method="post">
                 <label for="name">Product Name</label>
                 <input type="text" name="name" id="name" placeholder="product name">
                 <br>
@@ -32,7 +33,7 @@
                 <button>Submit</button>
             </form>
         </div>
-        <a href="/products">Back</a>
+        <a href="/farms/<%=farm._id%>/index">Back</a>
         
         <script src="" async defer></script>
     </body>

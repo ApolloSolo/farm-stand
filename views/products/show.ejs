@@ -13,7 +13,8 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <h1><%= product.name %></h1>
+        <h1><%= product.farm.name %></h1>
+        <h2><%= product.name %></h2>
         <ul>
             <li>Price: $<%= product.price %></li>
             <li>Category: <a href="/products?category=<%= product.category %>"><%= product.category %></a></li>

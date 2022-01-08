@@ -7,26 +7,29 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>All Products</title>
+        <title>Add Products</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <h1>View <%=category%> Products</h1>
+        <h1>Add A Farm</h1>
 
-        <ul>
-            <% for(let p of products){ %>
-                <li><a href="products/<%= p._id %>/index"><%= p.name %></a> <a href="/products/<%= p._id %>/edit">Edit</a></li>
-            <% } %>
-        </ul>
-
-        <a href="/products/new">Add Product</a> <!--Will display link if category is set to All-->
-        <%if(category !== "All"){%>
-            <a href="/products">All Products</a>
-        <%}%>
-        <a href="/farms">Farms</a>
-
+        <div>
+            <form action='/farms' method="post">
+                <label for="name">Farm Name</label>
+                <input type="text" name="name" id="name" placeholder="Pot Belly Farms">
+                <br>
+                <label for="city">City</label>
+                <input type="text" id="city" name="city">
+                <br>
+                <label for="email">email</label>
+                <input type="email" id="email" name="email">
+                
+                <button>Submit</button>
+            </form>
+        </div>
+        <a href="/farms">Back</a>
         
         <script src="" async defer></script>
     </body>

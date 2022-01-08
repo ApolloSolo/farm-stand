@@ -13,7 +13,8 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-        <h1>Add A Product</h1>
+        <h1><%=product.farm.name%></h1>
+        <h2>Edit: <%= product.name %></h2>
 
         <div>
             <form action='/products/<%= product._id %>?_method=PUT' method="post">

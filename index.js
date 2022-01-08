@@ -6,6 +6,7 @@ const methodOverride = require('method-override');
 
 
 const Product = require('./models/product');
+const Farm = require('./models/farm');
 
 const categories = ['fruit', 'vegetable', 'dairy', 'baked goods']; //Added categories like baked goods will not work-not valid cat
 
@@ -22,6 +23,55 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
+
+    //Farm Routes
+    app.get('/farms', async (req, res) => {
+        const farms = await Farm.find({});
+        res.render('farm/index', { farms }); 
+    })
+
+    app.get('/farms/new', (req, res) => {
+        res.render('farm/new');
+    })
+
+    app.post('/farms', async (req, res) => {
+        const newFarm = new Farm(req.body);
+        await newFarm.save();
+        res.redirect('/farms');
+    })
+
+    app.get('/farms/:id/index', async (req, res) => {
+        const {id} = req.params
+        const farm = await Farm.findById(id).populate('products');
+        res.render('farm/show', {farm}); 
+    })
+
+    app.delete('/farms/:id', async (req, res) => {
+        const { id } = req.params
+        const deletedFarm = await Farm.findByIdAndDelete(id);
+        
+        res.redirect('/farms');
+    })
+
+    app.get('/farms/:id/products/new', async (req, res) => {
+        const {id} = req.params;
+        const farm = await Farm.findById(id);
+        res.render('products/new', {categories, farm})
+    })
+
+    app.post('/farms/:id/products', async (req, res) => {
+        const { id } = req.params // this is farm id
+        const farm = await Farm.findById(id);
+        const { name, price, category } = req.body;
+        const product = await new Product({name, price, category})
+        farm.products.push(product);
+        product.farm = farm;
+        await farm.save();
+        await product.save();
+        res.redirect(`/farms/${id}/index`);
+    })
+
+    //Product Routes
 
 //view all products
 app.get('/products', async (req, res) => {
@@ -50,14 +100,15 @@ app.post('/products', async (req, res) => {
 //view product detail using mongo id
 app.get('/products/:id/index', async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id); //Mongo's built in query
+    const product = await Product.findById(id).populate('farm', 'name'); //Mongo's built in query
+    console.log(product);
     res.render('products/show', { product })
 })
 
 //Edit page route
 app.get('/products/:id/edit', async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id)
+    const product = await Product.findById(id).populate('farm', 'name');
     res.render('products/edit', { product, categories });
 })
 
